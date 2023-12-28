@@ -1,0 +1,2 @@
+Borde lägga till en slags buffer: så allting i spelet uppdateras en gång i sekunden, och alla kommandon och allting buffrar då upp sig och updaterar i rätt ordning efter 1 sekund.
+iallafall sakerna som displayas liksom
