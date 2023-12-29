@@ -56,10 +56,12 @@ public class MouseHandler implements MouseListener {
 
         // TODO: Fix outside and inside bounds camera
 
-        System.out.printf("dragged from x:%d -> %d and y:%d -> %d\n", lastMouseX, newMouseX, lastMouseY, newMouseY);
+        if (SwingUtilities.isLeftMouseButton(e)) {
+            System.out.printf("dragged from x:%d -> %d and y:%d -> %d\n", lastMouseX, newMouseX, lastMouseY, newMouseY);
 
-        gp.shiftX = (lastMouseX - newMouseX);
-        gp.shiftY = (lastMouseY - newMouseY);
+            gp.shiftX = (lastMouseX - newMouseX);
+            gp.shiftY = (lastMouseY - newMouseY);
+        }
 
         // gp.shiftCamera(lastMouseX - newMouseX, lastMouseY - newMouseY);
     }

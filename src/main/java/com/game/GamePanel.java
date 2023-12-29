@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.entity.Player;
@@ -20,17 +21,17 @@ public class GamePanel extends JPanel implements Runnable {
 
     // SCREEN SETTINGS
     final int originalTileSize = 16;
-    final int scale = 3;
+    final int scale = 2;
 
     public final int tileSize = originalTileSize * scale; // 48x48
-    public final int maxScreenCol = 16;
-    public final int maxScreenRow = 16;
+    public final int maxScreenCol = 26;
+    public final int maxScreenRow = 18;
     public int screenWidth = tileSize * maxScreenCol; // 1248
     public int screenHeight = tileSize * maxScreenRow; // 846
 
     // WORLD SETTINGS
-    public final int maxWorldCol = 26;
-    public final int maxWorldRow = 18;
+    public final int maxWorldCol = 26; // 100; // 26 original
+    public final int maxWorldRow = 18;// 100; // 18 original
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
@@ -41,6 +42,8 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS
     public int FPS = 60;
     public int drawCount; // used as tickrate for now
+
+    InformationPanel infoPanel;
 
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler(this);
@@ -69,6 +72,12 @@ public class GamePanel extends JPanel implements Runnable {
                 currentMouseY = e.getY();
             }
         });
+
+        add(new JButton("Test"));
+    }
+
+    public void setInformationPanel(InformationPanel infoPanel) {
+        this.infoPanel = infoPanel;
     }
 
     public void startGameThread() {
@@ -111,8 +120,9 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void shiftTiles(int x, int y) {
-        // Acts as a camera, shifts the coordinates of each tile one tileSize (unit) to
-        // the
+        // Acts as a camera, shifts the coordinates of each tile one tileSize (unit) in
+        // the given direction
+        // I.e, if shiftX = 1 move +1 tileSize length (unit) to the right
 
         for (int i = 0; i < tileM.mapTiles.length; i++) {
             for (int j = 0; j < tileM.mapTiles[i].length; j++) {
@@ -124,10 +134,11 @@ public class GamePanel extends JPanel implements Runnable {
                 if (x > 0) {
 
                     tileM.mapTiles[i][j].setX(tileM.mapTiles[i][j].getX() - x);
+                    shiftX = 0;
 
                 } else if (x < 0) {
                     tileM.mapTiles[i][j].setX(tileM.mapTiles[i][j].getX() - x);
-
+                    shiftX = 0;
                 }
 
                 if (y > 0) {
@@ -144,8 +155,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
 
+        // Update player? :D
         player.update();
 
+        // Update the world
         shiftTiles(shiftX, shiftY);
 
         if (mouseH.isPressed) {

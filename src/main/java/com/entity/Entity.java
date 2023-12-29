@@ -10,9 +10,14 @@ public class Entity {
     public int speed;
 
     Tile myTile;
+    
 
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     public String direction;
+
+    public Tile getMyTile() {
+        return myTile;
+    }
 
     @Override
     public String toString() {
