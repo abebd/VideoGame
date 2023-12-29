@@ -124,10 +124,11 @@ public class GamePanel extends JPanel implements Runnable {
                 if (x > 0) {
 
                     tileM.mapTiles[i][j].setX(tileM.mapTiles[i][j].getX() - x);
+                    shiftX = 0;
 
                 } else if (x < 0) {
                     tileM.mapTiles[i][j].setX(tileM.mapTiles[i][j].getX() - x);
-
+                    shiftX = 0;
                 }
 
                 if (y > 0) {
