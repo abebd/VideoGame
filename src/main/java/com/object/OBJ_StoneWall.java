@@ -13,7 +13,9 @@ public class OBJ_StoneWall extends SuperObject {
     public OBJ_StoneWall(Tile tile, WallDirection givenDirection) {
         myTile = tile;
 
+        // DESCRIPTIVE VARIABLES
         name = "Tree1";
+        contextMenuInteractionString = "Break";
 
         image = dictateWallDirection(givenDirection);
 

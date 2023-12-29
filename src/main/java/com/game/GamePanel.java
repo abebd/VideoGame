@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.entity.Player;
@@ -45,16 +44,21 @@ public class GamePanel extends JPanel implements Runnable {
 
     InformationPanel infoPanel;
 
+    // OBJECT MANAGERS
     TileManager tileM = new TileManager(this);
+    WorldObject worldObj = new WorldObject(this, tileM);
+
+    // HANDLERS
     KeyHandler keyH = new KeyHandler(this);
     MouseHandler mouseH = new MouseHandler(this, tileM);
-    WorldObject worldObj = new WorldObject(this, tileM);
+
     Thread gameThread;
+
+    // PLAYER
     public Player player = new Player(this, keyH, mouseH, tileM);
 
+    // IDK
     public SuperObject obj[] = new SuperObject[10];
-
-    // New panel
 
     public GamePanel() {
 
@@ -73,7 +77,6 @@ public class GamePanel extends JPanel implements Runnable {
             }
         });
 
-        add(new JButton("Test"));
     }
 
     public void setInformationPanel(InformationPanel infoPanel) {

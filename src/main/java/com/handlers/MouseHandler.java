@@ -3,6 +3,10 @@ package com.handlers;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
 import com.game.GamePanel;
@@ -44,6 +48,7 @@ public class MouseHandler implements MouseListener {
 
         if (SwingUtilities.isRightMouseButton(e)) {
             Tile tile = tileM.getTileAtPosition(lastMouseX, lastMouseY);
+            tile.showContextMenu(gp, lastMouseX, lastMouseY);
             System.out.println(tile.toString());
         }
     }

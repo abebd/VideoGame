@@ -11,7 +11,9 @@ public class OBJ_WoodenWall extends SuperObject {
     public OBJ_WoodenWall(Tile tile) {
         myTile = tile;
 
+        // DESCRIPTIVE VARIABLES
         name = "Wooden Wall";
+        contextMenuInteractionString = "Break";
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/assets/object/wooden_wall1.png"));
