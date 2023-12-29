@@ -16,6 +16,9 @@ public class SuperObject {
     public Tile myTile;
     public TileManager tileM;
 
+    // Length of this string is crazy
+    String contextMenuInteractionString = "";
+
     public void setObject() {
 
         myTile = tileM.getTileAtPosition(150, 150);
@@ -25,6 +28,10 @@ public class SuperObject {
 
     public void draw(Graphics2D g2, GamePanel gp) {
         g2.drawImage(image, myTile.getX(), myTile.getY(), gp.tileSize, gp.tileSize, null);
+    }
+
+    public String getContextMenuinteractionString() {
+        return contextMenuInteractionString;
     }
 
     @Override

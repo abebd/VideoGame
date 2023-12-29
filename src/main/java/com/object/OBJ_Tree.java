@@ -11,7 +11,10 @@ public class OBJ_Tree extends SuperObject {
     public OBJ_Tree(Tile tile) {
         myTile = tile;
 
+        // DESCRIPTIVE VARIABLES
         name = "Tree1";
+        contextMenuInteractionString = "Chop down";
+
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/assets/object/Tree1.png"));
         } catch (IOException e) {

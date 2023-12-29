@@ -43,10 +43,12 @@ public class KeyHandler implements KeyListener {
             // rightPressed = false;
         }
 
-        // Camera movement
-        if (code == KeyEvent.VK_RIGHT) {
-            rightCameraPressed = true;
+        // Other
+
+        if (code == KeyEvent.VK_1) {
+            System.out.println(gp.player.getMyTile());
         }
+
     }
 
     @Override

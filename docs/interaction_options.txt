@@ -1,0 +1,16 @@
+Need to have different kind of interaction options based on what kind of object/entity it is:
+
+0. Common
+ - Inspect:     Give some flavour text like "this tree is very old, someone has carved a heart 
+                                            and put the initials S and L inside it"
+ - Move:        Tries to move the player to this position
+
+
+1. If tile has an entity
+ - Attack:      if Entity.isOfType(EntityType.ENEMY) || Entity.isOfType(EntityType.NEUTRAL)
+ - Talk:        if Entity.isOfType(EntityType.FRIENDLY) || Entity.isOfType(EntityType.NEUTRAL)
+ - Interact:    if Entity.isOfType(EntityType.NON_NPC) // like if it's a chair, try to sit the player down
+
+2. If tile has an object
+ - Interact 2:  each object should have their own type of interaction. A wall should have Break Object,
+                or if it's a door; Open Door and so on.

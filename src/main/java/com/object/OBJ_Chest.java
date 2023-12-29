@@ -11,7 +11,10 @@ public class OBJ_Chest extends SuperObject {
     public OBJ_Chest(Tile tile) {
         myTile = tile;
 
+        // DESCRIPTIVE VARIABLES
         name = "Chest";
+        contextMenuInteractionString = "Open chest";
+
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/assets/object/chest.png"));
         } catch (IOException e) {
@@ -21,8 +24,6 @@ public class OBJ_Chest extends SuperObject {
         isInteractable = true;
         hasCollision = true;
     }
-
-    
 
     @Override
     public String toString() {
