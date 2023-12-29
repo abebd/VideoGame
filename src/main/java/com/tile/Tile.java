@@ -13,6 +13,7 @@ public class Tile {
     public boolean collision = false;
     public int mapTileNum = 0;
     int x, y;
+    public int worldX, worldY, screenX, screenY;
     Entity entity = null;
     SuperObject object = null;
 
@@ -34,6 +35,14 @@ public class Tile {
 
     public int getY() {
         return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public void setEntity(Entity entity) {
@@ -59,7 +68,6 @@ public class Tile {
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
 
         String out = "x:" + x + " y:" + y + " mapTileNum:" + mapTileNum;
 

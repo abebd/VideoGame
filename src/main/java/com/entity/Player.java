@@ -35,7 +35,7 @@ public class Player extends Entity {
         this.tileM = tileM;
 
         screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
-        screenY = gp.screenHeigt / 2 - (gp.tileSize / 2);
+        screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
 
         setDefaultValues();
     }
@@ -137,7 +137,7 @@ public class Player extends Entity {
 
     public void moveTiles(Tile oldTile, Tile newTile) {
 
-    if (playerCanMoveHere(newTile)) {
+        if (playerCanMoveHere(newTile)) {
 
             oldTile.setEntity(null);
             myTile = newTile;
@@ -205,8 +205,9 @@ public class Player extends Entity {
         image = up1;
 
         g2.drawImage(image, myTile.getX(), myTile.getY(), gp.tileSize, gp.tileSize, null);
-        // g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+    
 
+    // g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
     }
 
     @Override

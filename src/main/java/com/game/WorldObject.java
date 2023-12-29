@@ -115,6 +115,9 @@ public class WorldObject {
         if (index == 8) {
             tile.setObject(new OBJ_Tree(tile));
         }
+        if (index == 9) {
+            tile.setObject(new OBJ_Chest(tile));
+        }
 
     }
 }
