@@ -17,6 +17,7 @@ public class TileManager {
     Tile[] tileImageList;
     int mapTileNum[][];
     public Tile[][] mapTiles;
+    public Tile[][] visibleMapTiles;
     Tile currentTile;
 
     public TileManager(GamePanel gp) {
@@ -36,7 +37,6 @@ public class TileManager {
     public void loadMap(String filePath) {
 
         try {
-
             InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
@@ -111,7 +111,15 @@ public class TileManager {
 
                 currentTile = mapTiles[col][row];
                 currentTile.image = tileImageList[currentTile.mapTileNum].image;
+
+                // if ((currentTile.getX() >= gp.cameraX) &&
+                // (currentTile.getY() >= gp.cameraY) &&
+                // (currentTile.getX() <= gp.cameraX + gp.screenHeight) &&
+                // (currentTile.getY() <= gp.cameraY + gp.screenWidth)) {
+
                 currentTile.draw(g2, gp);
+
+                // }
             }
         }
     }

@@ -3,12 +3,20 @@ package com.handlers;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import com.game.GamePanel;
+
 public class KeyHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, upCameraPressed, downCameraPressed,
             leftCameraPressed, rightCameraPressed;
     public int cooldownTicks = 10;
     public int ticksSinceLastMove = 0;
+
+    GamePanel gp;
+
+    public KeyHandler(GamePanel gp) {
+        this.gp = gp;
+    }
 
     @Override
     public void keyPressed(KeyEvent e) {

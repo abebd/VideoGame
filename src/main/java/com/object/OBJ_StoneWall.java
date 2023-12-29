@@ -26,32 +26,33 @@ public class OBJ_StoneWall extends SuperObject {
 
         switch (givenDirection) {
             case STRAIGHT_ABOVE:
-                assetString = "/assets/object/stoneWall_straightAbove.png";
+                assetString = "/assets/object/stone_wall_straight_above.png";
                 break;
             case STRAIGHT_LEFT:
-                assetString = "/assets/object/stoneWall_straightLeft.png";
+                assetString = "/assets/object/stone_wall_straight_left.png";
                 break;
             case STRAIGHT_RIGHT:
-                assetString = "/assets/object/stoneWall_straightRight.png";
+                assetString = "/assets/object/stone_wall_straight_right.png";
                 break;
             case STRAIGHT_UNDER:
-                assetString = "/assets/object/stoneWall_straightAbove.png"; // TODO: Add STRAIGHT_UNDER texture for
-                                                                            // stone wall
+                assetString = "/assets/object/stone_wall_straight_above.png"; // TODO: Add STRAIGHT_UNDER texture for
+                                                                              // stone wall
                 break;
-            case EDGE_LEFT:
-                assetString = "/assets/object/stoneWall_edgeLeft.png";
+            case OUTER_EDGE_LEFT:
+                assetString = "/assets/object/stone_wall_outer_edge_left.png";
                 break;
-            case EDGE_RIGHT:
-                assetString = "/assets/object/stoneWall_edgeRight.png";
+            case OUTER_EDGE_RIGHT:
+                assetString = "/assets/object/stone_wall_outer_edge_right.png";
                 break;
             case INNER_EDGE_LEFT:
-                assetString = "/assets/object/stoneWall_innerEdgeLeft.png";
+                assetString = "/assets/object/stone_wall_inner_edge_left.png";
                 break;
             case INNER_EDGE_RIGHT:
-                assetString = "/assets/object/stoneWall_innerEdgeRight.png";
+                assetString = "/assets/object/stone_wall_inner_edge_right.png";
                 break;
             case PILLAR:
-                assetString = "/assets/object/stoneWall_straightLeft.png"; // TODO: Add PILLAR texture for stone wall
+                assetString = "/assets/object/stone_wall_inner_edge_right.png"; // TODO: Add PILLAR texture for stone
+                                                                                // wall
                 break;
 
         }

@@ -6,8 +6,8 @@ public enum WallDirection {
     STRAIGHT_RIGHT,
     STRAIGHT_UNDER,
 
-    EDGE_LEFT,
-    EDGE_RIGHT,
+    OUTER_EDGE_LEFT,
+    OUTER_EDGE_RIGHT,
 
     INNER_EDGE_LEFT,
     INNER_EDGE_RIGHT,

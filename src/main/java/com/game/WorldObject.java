@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import com.enums.WallDirection;
 import com.object.*;
 import com.tile.Tile;
 import com.tile.TileManager;
@@ -21,7 +22,7 @@ public class WorldObject {
         this.tileM = tileM;
 
         // getObjectImage();
-        loadObjects("/map/object_map/world.txt");
+        loadObjects("/map/object_map/world1_tilemap.csv", ",");
     }
 
     /*
@@ -53,7 +54,7 @@ public class WorldObject {
         }
     }
 
-    public void loadObjects(String objectMap) {
+    public void loadObjects(String objectMap, String delimiter) {
 
         try {
 
@@ -62,7 +63,7 @@ public class WorldObject {
 
             for (int row = 0; row < gp.maxWorldRow; row++) {
                 String line = br.readLine();
-                String numbers[] = line.split(" ");
+                String numbers[] = line.split(delimiter);
 
                 for (int col = 0; col < gp.maxWorldCol; col++) {
                     int num = Integer.parseInt(numbers[col]);
@@ -81,17 +82,41 @@ public class WorldObject {
 
     public void setObjectBasedOnIndexOnTile(Tile tile, int index) {
 
+        if (index == 1) {
+            tile.setObject(new OBJ_StoneWall(tile, WallDirection.INNER_EDGE_LEFT));
+        }
+
         if (index == 2) {
-            tile.setObject(new OBJ_WoodenWall(tile));
+            tile.setObject(new OBJ_StoneWall(tile, WallDirection.INNER_EDGE_RIGHT));
+            ;
         }
 
         if (index == 3) {
-            tile.setObject(new OBJ_WoodenDoor(tile));
+            tile.setObject(new OBJ_StoneWall(tile, WallDirection.OUTER_EDGE_RIGHT));
+            ;
         }
 
-        // Tree
         if (index == 4) {
+            tile.setObject(new OBJ_StoneWall(tile, WallDirection.OUTER_EDGE_LEFT));
+            ;
+        }
+        if (index == 5) {
+            tile.setObject(new OBJ_StoneWall(tile, WallDirection.STRAIGHT_ABOVE));
+            ;
+        }
+        if (index == 6) {
+            tile.setObject(new OBJ_StoneWall(tile, WallDirection.STRAIGHT_LEFT));
+            ;
+        }
+        if (index == 7) {
+            tile.setObject(new OBJ_StoneWall(tile, WallDirection.STRAIGHT_RIGHT));
+            ;
+        }
+        if (index == 8) {
             tile.setObject(new OBJ_Tree(tile));
+        }
+        if (index == 9) {
+            tile.setObject(new OBJ_Chest(tile));
         }
 
     }
