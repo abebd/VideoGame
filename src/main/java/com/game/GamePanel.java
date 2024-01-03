@@ -131,7 +131,7 @@ public class GamePanel extends JPanel implements Runnable {
             for (int j = 0; j < tileM.mapTiles[i].length; j++) {
 
                 if (shiftX != 0 || shiftY != 0) {
-                    System.out.printf("moving x%d y%d\n", shiftX, shiftY);
+                    System.out.printf("moving camerax%d y%d\n", shiftX, shiftY);
                 }
 
                 if (x > 0) {
@@ -140,14 +140,17 @@ public class GamePanel extends JPanel implements Runnable {
                     shiftX = 0;
 
                 } else if (x < 0) {
+
                     tileM.mapTiles[i][j].setX(tileM.mapTiles[i][j].getX() - x);
                     shiftX = 0;
                 }
 
                 if (y > 0) {
+
                     tileM.mapTiles[i][j].setY(tileM.mapTiles[i][j].getY() - y);
                     shiftY = 0;
                 } else if (y < 0) {
+
                     tileM.mapTiles[i][j].setY(tileM.mapTiles[i][j].getY() - y);
                     shiftY = 0;
                 }
@@ -164,6 +167,16 @@ public class GamePanel extends JPanel implements Runnable {
         // Update the world
         shiftTiles(shiftX, shiftY);
 
+        if (keyH.actionBarSlotOnePressed) {
+            // Ability ability = getAbilityAt(ActionBar.ONE)
+            // ability.showSpellOverlay // which will deal call the appropriate method per
+            // object
+            tileM.highlightAvailableTiles(player, player.actionBar[0].getTileRange());
+        }
+
+        // Update tile if its getting hovered
+        tileM.setHoverOnTileAt(currentMouseX, currentMouseY);
+
         if (mouseH.isPressed) {
             // System.out.println("DOwn!!!!!");
             // System.out.printf("%d %d\n", mouseH.lastMouseX, mouseH.lastMouseY);
@@ -172,7 +185,7 @@ public class GamePanel extends JPanel implements Runnable {
         // System.out.println(FPS);
 
         if (mouseH.isClicked) {
-            Tile t = tileM.getTileAtPosition(mouseH.lastMouseX, mouseH.lastMouseY);
+            // Tile t = tileM.getTileAtPosition(mouseH.lastMouseX, mouseH.lastMouseY);
             // JOptionPane.showMessageDialog(null, t.toString(), "Tile information",
             // JOptionPane.INFORMATION_MESSAGE);
             // t.setObject(new OBJ_Tree(t));
@@ -193,10 +206,6 @@ public class GamePanel extends JPanel implements Runnable {
         player.draw(g2);
 
         g2.dispose(); // Good practice to save memory
-    }
-
-    public void shiftCamera(int i, int j) {
-
     }
 
 }

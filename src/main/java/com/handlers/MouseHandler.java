@@ -3,10 +3,6 @@ package com.handlers;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
 import com.game.GamePanel;
@@ -15,7 +11,7 @@ import com.tile.TileManager;
 
 public class MouseHandler implements MouseListener {
     public int lastMouseX, lastMouseY, newMouseX, newMouseY;
-    public boolean isPressed, isEntered, isClicked;
+    public boolean isPressed, isEntered, isClicked, /* REMOVE ME */ highlight;
 
     GamePanel gp;
     TileManager tileM;
@@ -46,6 +42,11 @@ public class MouseHandler implements MouseListener {
         lastMouseX = e.getX();
         lastMouseY = e.getY();
 
+        if (SwingUtilities.isLeftMouseButton(e)) {
+            Tile tile = tileM.getTileAtPosition(lastMouseX, lastMouseY);
+            tile.toggleIsHighlighted();
+        }
+
         if (SwingUtilities.isRightMouseButton(e)) {
             Tile tile = tileM.getTileAtPosition(lastMouseX, lastMouseY);
             tile.showContextMenu(gp, lastMouseX, lastMouseY);
@@ -62,7 +63,9 @@ public class MouseHandler implements MouseListener {
         // TODO: Fix outside and inside bounds camera
 
         if (SwingUtilities.isLeftMouseButton(e)) {
-            System.out.printf("dragged from x:%d -> %d and y:%d -> %d\n", lastMouseX, newMouseX, lastMouseY, newMouseY);
+            if (lastMouseX != newMouseX && lastMouseY != newMouseY)
+                System.out.printf("dragged from x:%d -> %d and y:%d -> %d\n", lastMouseX, newMouseX, lastMouseY,
+                        newMouseY);
 
             gp.shiftX = (lastMouseX - newMouseX);
             gp.shiftY = (lastMouseY - newMouseY);

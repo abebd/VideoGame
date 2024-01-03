@@ -1,0 +1,6 @@
+Player has spells
+Spellslot 1 = fireball
+
+Player pressed 1:
+    Check if spell exist in player.spells[1]
+    spell.highlightAvailableTiles();

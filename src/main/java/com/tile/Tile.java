@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
-import javax.swing.BorderFactory;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -15,15 +14,24 @@ import com.entity.EntityType;
 import com.game.GamePanel;
 import com.object.SuperObject;
 
+import config.Config;
+
 public class Tile {
 
     public BufferedImage image;
     public boolean collision = false;
     public int mapTileNum = 0;
+
     int x, y;
+    int columnValue = -1;
+    int rowValue = -1;
+
     public int worldX, worldY, screenX, screenY;
+
     Entity entity = null;
     SuperObject object = null;
+    boolean isHighlighted;
+    boolean isHover = false;
 
     // Main constructor
     public Tile(BufferedImage image, int mapTileNum, int x, int y) {
@@ -118,7 +126,75 @@ public class Tile {
     }
 
     public void draw(Graphics2D g2, GamePanel gp) {
+
+        // Always draw image
         g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+
+        // Add low opactity overlay
+        if (isHighlighted) {
+
+            g2.setColor(Config.SPELL_OVERLAY_COLOR_VALID_TILE);
+
+            if (isHover) {
+                // Set it to blue if its being hovered
+                g2.setColor(Config.SPELL_OVERLAY_COLOR_HOVER_TILE);
+            }
+
+            g2.fillRect(x, y, gp.tileSize, gp.tileSize);
+
+        }
+    }
+
+    public void toggleIsHover() {
+        this.isHover = !this.isHover;
+    }
+
+    public boolean getIsHover() {
+        return isHover;
+    }
+
+    public void setIsHover(boolean isHover) {
+        this.isHover = isHover;
+    }
+
+    public void toggleIsHighlighted() {
+        this.isHighlighted = !this.isHighlighted;
+    }
+
+    public boolean getIsHighlighted() {
+        return isHighlighted;
+    }
+
+    public void setIsHighlighted(boolean isHighlighted) {
+        this.isHighlighted = isHighlighted;
+    }
+
+    public int getColumnValue() {
+        return columnValue;
+    }
+
+    public void setColumnValue(int columnValue) {
+        this.columnValue = columnValue;
+    }
+
+    public int getRowValue() {
+        return rowValue;
+    }
+
+    public boolean objectOnTileHasCollision() {
+        // Need this to simplify checking if the object has collision
+        // Otherwise would need to do this if statement before the method call
+
+        if (this.object != null) {
+            return this.object.hasCollision;
+        }
+
+        return false;
+
+    }
+
+    public void setRowValue(int rowValue) {
+        this.rowValue = rowValue;
     }
 
     public int getX() {
@@ -161,7 +237,7 @@ public class Tile {
     @Override
     public String toString() {
 
-        String out = "x:" + x + " y:" + y + " mapTileNum:" + mapTileNum;
+        String out = "x:" + x + " y:" + y + " mapTileNum:" + mapTileNum + " isHighlited:" + isHighlighted;
 
         if (entity != null) {
             out += " entity:" + entity.toString();
@@ -170,6 +246,11 @@ public class Tile {
         if (object != null) {
             out += " object:" + object.toString();
         }
+
+        if (columnValue != -1 && rowValue != -1) {
+            out += " columnValue:" + columnValue + " rowValue:" + rowValue;
+        }
+
         return out;
     }
 

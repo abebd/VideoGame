@@ -1,12 +1,12 @@
 package com.entity;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.ability.*;
 import com.game.GamePanel;
 import com.handlers.KeyHandler;
 import com.handlers.MouseHandler;
@@ -20,11 +20,10 @@ public class Player extends Entity {
     MouseHandler mouseH;
     TileManager tileM;
 
-    boolean hasBlinkingBorder;
-    boolean isBorderVisible = true;
-
     public final int screenX;
     public final int screenY;
+
+    public Ability[] actionBar = new Ability[9];
 
     public Player(GamePanel gp, KeyHandler keyH, MouseHandler mouseH, TileManager tileM) {
         // Constructor
@@ -38,6 +37,10 @@ public class Player extends Entity {
         screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
 
         setDefaultValues();
+    }
+
+    public void castSpell() {
+        // Bad code since everything is hard coded
     }
 
     public void setMyTile(Tile newTile) {
@@ -60,18 +63,9 @@ public class Player extends Entity {
 
         // Blinking border around player
         hasBlinkingBorder = true;
-    }
 
-    public void toggleBorderVisibility() {
-        isBorderVisible = !isBorderVisible;
-    }
-
-    public boolean hasBlinkingBorder() {
-        return hasBlinkingBorder;
-    }
-
-    public boolean isBorderVisible() {
-        return isBorderVisible;
+        // Abilities
+        actionBar[0] = new ABLTY_Fireball();
     }
 
     public void update() {
@@ -186,16 +180,24 @@ public class Player extends Entity {
 
     public void draw(Graphics2D g2) {
 
-        if (isBorderVisible() && hasBlinkingBorder()) {
-            // Draw border
-            g2.setColor(Color.decode("#DCD01C"));
-            g2.drawLine(myTile.getX() + gp.tileSize, myTile.getY(), myTile.getX(), myTile.getY());
-            g2.drawLine(myTile.getX(), myTile.getY(), myTile.getX(), myTile.getY() + gp.tileSize);
-            g2.drawLine(myTile.getX() + gp.tileSize, myTile.getY() + gp.tileSize, myTile.getX() + gp.tileSize,
-                    myTile.getY());
-            g2.drawLine(myTile.getX() + gp.tileSize, myTile.getY() + gp.tileSize, myTile.getX(),
-                    myTile.getY() + gp.tileSize);
-        }
+        /*
+         * if (isBorderVisible() && hasBlinkingBorder()) {
+         * // Draw border
+         * g2.setColor(Color.decode("#DCD01C"));
+         * g2.drawLine(myTile.getX() + gp.tileSize, myTile.getY(), myTile.getX(),
+         * myTile.getY());
+         * g2.drawLine(myTile.getX(), myTile.getY(), myTile.getX(), myTile.getY() +
+         * gp.tileSize);
+         * g2.drawLine(myTile.getX() + gp.tileSize, myTile.getY() + gp.tileSize,
+         * myTile.getX() + gp.tileSize,
+         * myTile.getY());
+         * g2.drawLine(myTile.getX() + gp.tileSize, myTile.getY() + gp.tileSize,
+         * myTile.getX(),
+         * myTile.getY() + gp.tileSize);
+         * }
+         */
+
+        drawBorder(g2, gp);
 
         getPlayerImage();
         BufferedImage image = null;
