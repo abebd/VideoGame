@@ -14,11 +14,13 @@ import com.game.GamePanel;
 public class TileManager {
 
     GamePanel gp;
+
     Tile[] tileImageList;
     int mapTileNum[][];
     public Tile[][] mapTiles;
     public Tile[][] visibleMapTiles;
     Tile currentTile;
+    Tile lastOnHoverTile;
 
     public TileManager(GamePanel gp) {
 
@@ -55,7 +57,11 @@ public class TileManager {
                     int mapTileX = col * gp.tileSize;
                     int mapTileY = row * gp.tileSize;
 
-                    mapTiles[col][row] = new Tile(null, num, mapTileX, mapTileY);
+                    Tile newTile = new Tile(null, num, mapTileX, mapTileY);
+                    newTile.setColumnValue(col);
+                    newTile.setRowValue(row);
+                    mapTiles[col][row] = newTile;
+                    // mapTiles[col][row] = new Tile(null, num, mapTileX, mapTileY);
 
                     col++;
                 }
@@ -150,6 +156,43 @@ public class TileManager {
             }
         }
         return currentTile;
+    }
+
+    public void highlightAvailableTiles(Entity caster, int range) {
+        Tile startingTile = caster.getMyTile();
+
+        int minColumn = startingTile.getColumnValue() - range;
+        int maxColumn = startingTile.getColumnValue() + range;
+        int minRow = startingTile.getRowValue() - range;
+        int maxRow = startingTile.getRowValue() + range;
+
+        for (int col = 0; col < mapTiles.length; col++) {
+            for (int row = 0; row < mapTiles[col].length; row++) {
+
+                Tile actualTile = mapTiles[col][row];
+                int actualColumn = mapTiles[col][row].getColumnValue();
+                int actualRow = mapTiles[col][row].getRowValue();
+
+                if (minColumn < actualColumn && actualColumn < maxColumn && minRow < actualRow && actualRow < maxRow
+                        && !actualTile.objectOnTileHasCollision()) {
+
+                    actualTile.setIsHighlighted(true);
+                } else {
+                    // Turn it off
+                    actualTile.setIsHighlighted(false);
+                }
+            }
+        }
+
+    }
+
+    public void setHoverOnTileAt(int x, int y) {
+        Tile tile = getTileAtPosition(x, y);
+        if (lastOnHoverTile != null) {
+            lastOnHoverTile.setIsHover(false);
+        }
+        tile.setIsHover(true);
+        lastOnHoverTile = tile;
     }
 }
 

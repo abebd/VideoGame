@@ -12,6 +12,9 @@ public class KeyHandler implements KeyListener {
     public int cooldownTicks = 10;
     public int ticksSinceLastMove = 0;
 
+    // Test booleans
+    public boolean actionBarSlotOnePressed;
+
     GamePanel gp;
 
     public KeyHandler(GamePanel gp) {
@@ -22,25 +25,57 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
+        /* WASD */
+        /*
+         * 
+         * // Player movement
+         * if (code == KeyEvent.VK_W) {
+         * upPressed = true;
+         * // upPressed = false;
+         * }
+         * 
+         * if (code == KeyEvent.VK_S) {
+         * downPressed = true;
+         * // downPressed = false;
+         * }
+         * 
+         * if (code == KeyEvent.VK_A) {
+         * leftPressed = true;
+         * // leftPressed = false;
+         * }
+         * 
+         * if (code == KeyEvent.VK_D) {
+         * rightPressed = true;
+         * // rightPressed = false;
+         * }
+         * 
+         */
+
+        /* ARROWS */
         // Player movement
-        if (code == KeyEvent.VK_W) {
+        if (code == KeyEvent.VK_UP) {
             upPressed = true;
             // upPressed = false;
         }
 
-        if (code == KeyEvent.VK_S) {
+        if (code == KeyEvent.VK_DOWN) {
             downPressed = true;
             // downPressed = false;
         }
 
-        if (code == KeyEvent.VK_A) {
+        if (code == KeyEvent.VK_LEFT) {
             leftPressed = true;
             // leftPressed = false;
         }
 
-        if (code == KeyEvent.VK_D) {
+        if (code == KeyEvent.VK_RIGHT) {
             rightPressed = true;
             // rightPressed = false;
+        }
+
+        // ABILITIES
+        if (code == KeyEvent.VK_1) {
+            actionBarSlotOnePressed = true;
         }
 
         // Other
