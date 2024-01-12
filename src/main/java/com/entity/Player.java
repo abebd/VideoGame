@@ -13,6 +13,8 @@ import com.handlers.MouseHandler;
 import com.tile.Tile;
 import com.tile.TileManager;
 
+import config.Config;
+
 public class Player extends Entity {
 
     GamePanel gp;
@@ -65,7 +67,9 @@ public class Player extends Entity {
         hasBlinkingBorder = true;
 
         // Abilities
-        actionBar[0] = new ABLTY_Fireball();
+        actionBar[0] = new ABLTY_Blink();
+        actionBar[1] = new ABLTY_Fireball();
+
     }
 
     public void update() {
@@ -143,13 +147,14 @@ public class Player extends Entity {
     }
 
     public boolean playerCanMoveHere(Tile tile) {
-        System.out.println("Checking tile: " + tile.toString());
+        if (Config.DEBUG_MODE && Config.DEBUG_PRINT_PLAYER_MOVEMENT) {
+            System.out.println("Checking tile: " + tile.toString());
+        }
 
         // No object or entity exist, so just walk through
         if (tile.getObject() == null && tile.getEntity() == null) {
             return true;
         }
-
         if (tile.getObject().hasCollision == true) {
             System.out.println("Can not move here since object has collision");
             return false;

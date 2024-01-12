@@ -14,6 +14,7 @@ public class KeyHandler implements KeyListener {
 
     // Test booleans
     public boolean actionBarSlotOnePressed;
+    public boolean actionBarSlotTwoPressed;
 
     GamePanel gp;
 
@@ -75,13 +76,11 @@ public class KeyHandler implements KeyListener {
 
         // ABILITIES
         if (code == KeyEvent.VK_1) {
-            actionBarSlotOnePressed = true;
+            actionBarSlotOnePressed = !actionBarSlotOnePressed;
         }
 
-        // Other
-
-        if (code == KeyEvent.VK_1) {
-            System.out.println(gp.player.getMyTile());
+        if (code == KeyEvent.VK_2) {
+            actionBarSlotTwoPressed = !actionBarSlotTwoPressed;
         }
 
     }

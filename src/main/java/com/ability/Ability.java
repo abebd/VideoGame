@@ -1,5 +1,10 @@
 package com.ability;
 
+import com.entity.Entity;
+import com.entity.Player;
+import com.tile.Tile;
+import com.tile.TileManager;
+
 public class Ability {
 
     String name;
@@ -9,8 +14,13 @@ public class Ability {
     int tileRange;
     int cooldown;
 
-    public void highlightAvailableTiles() {
+    public boolean fire(Player player, Tile targetTile, TileManager tileM) {
+        System.out.println("Not yet implemented for this spell haha");
+        return false;
+    }
 
+    public void toggleSpellOverlay(TileManager tileM, Entity caster) {
+        tileM.highlightAvailableTiles(caster, this);
     }
 
     public float getDamage() {
