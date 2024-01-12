@@ -6,6 +6,8 @@ import java.awt.GridBagLayout;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import config.Config;
+
 public class MainFrame extends JFrame {
 
     public MainFrame() {
@@ -41,6 +43,11 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) {
+
+        Config c = new Config();
+        // c.loadConfig();
+        c.printSettings();
+
         SwingUtilities.invokeLater(() -> new MainFrame());
     }
 }

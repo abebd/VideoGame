@@ -62,18 +62,21 @@ public class Tile {
             if (entity.isOfType(EntityType.ENEMY)) {
 
                 JMenuItem attack = new JMenuItem("Attack");
+                attack.addActionListener(menuListener);
                 menu.add(attack);
             }
 
             if (entity.isOfType(EntityType.FRIENDLY) || entity.isOfType(EntityType.NEUTRAL)) {
 
                 JMenuItem talk = new JMenuItem("Talk");
+                talk.addActionListener(menuListener);
                 menu.add(talk);
             }
 
             if (entity.isOfType(EntityType.DEFAULT)) {
 
                 JMenuItem interact = new JMenuItem("Interact");
+                interact.addActionListener(menuListener);
                 menu.add(interact);
             }
 
@@ -85,17 +88,40 @@ public class Tile {
 
             JMenuItem objectInteract = new JMenuItem(object.getContextMenuinteractionString());
             menu.add(objectInteract);
-
+            objectInteract.addActionListener(menuListener);
             menu.addSeparator();
         }
 
         // Generic items
         JMenuItem inspect = new JMenuItem("Inspect");
+        inspect.addActionListener(menuListener);
         menu.add(inspect);
 
         JMenuItem move = new JMenuItem("Move");
         move.addActionListener(menuListener);
         menu.add(move);
+
+        // Debug options
+
+        if (Config.DEBUG_MODE && Config.DEBUG_ADD_OPTIONS_ON_CONTEXT_MENU) {
+            menu.addSeparator();
+
+            JMenuItem debugTileInfo = new JMenuItem("debug.getTileInfo()");
+            debugTileInfo.addActionListener(menuListener);
+            menu.add(debugTileInfo);
+
+            if (object != null) {
+                JMenuItem debugObjectInfo = new JMenuItem("debug.getObjectInfo()");
+                debugObjectInfo.addActionListener(menuListener);
+                menu.add(debugObjectInfo);
+            }
+
+            if (entity != null) {
+                JMenuItem debugEntityInfo = new JMenuItem("debug.getEntityInfo()");
+                debugEntityInfo.addActionListener(menuListener);
+                menu.add(debugEntityInfo);
+            }
+        }
 
         // menu.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 
@@ -105,23 +131,47 @@ public class Tile {
 
     public void handleContextMenuOption(String command) {
         switch (command) {
+
+            // Entity alternatives
             case ("Attack"):
+                System.out.println("NYI");
                 break;
             case ("Talk"):
+                System.out.println("NYI");
                 break;
             case ("Interact"):
+                System.out.println("NYI");
                 break;
+
+            // Object alternatives
             case ("Break"):
+                System.out.println("NYI");
                 break;
             case ("Open door"):
+                System.out.println("NYI");
                 break;
             case ("Chop down"):
+                System.out.println("NYI");
                 break;
             case ("Open chest"):
+                System.out.println("NYI");
                 break;
-            default:
-                System.out.printf("debug: command=%s is NYI", command);
+
+            // Debug alternatives
+            case ("debug.getTileInfo()"):
+                System.out.println(this.toString());
                 break;
+            case ("debug.getObjectInfo()"):
+                System.out.println(this.object.toString());
+                break;
+            case ("debug.getEntityInfo()"):
+                System.out.println(this.entity.toString());
+                break;
+            /*
+             * default:
+             * System.out.printf("debug: command=%s is NYI\n", command);
+             * break;
+             */
         }
     }
 
@@ -145,7 +195,7 @@ public class Tile {
         }
     }
 
-    public void toggleIsHover() {
+    public void toggleHover() {
         this.isHover = !this.isHover;
     }
 
@@ -157,7 +207,7 @@ public class Tile {
         this.isHover = isHover;
     }
 
-    public void toggleIsHighlighted() {
+    public void toggleHighlighted() {
         this.isHighlighted = !this.isHighlighted;
     }
 
@@ -179,6 +229,10 @@ public class Tile {
 
     public int getRowValue() {
         return rowValue;
+    }
+
+    public String getColRowAsString() {
+        return columnValue + "," + rowValue;
     }
 
     public boolean objectOnTileHasCollision() {

@@ -9,12 +9,16 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
+import com.ability.Ability;
 import com.entity.Player;
 import com.handlers.KeyHandler;
 import com.handlers.MouseHandler;
 import com.object.SuperObject;
 import com.tile.Tile;
 import com.tile.TileManager;
+import com.ui.ActionBar;
+
+import config.Config;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -131,7 +135,9 @@ public class GamePanel extends JPanel implements Runnable {
             for (int j = 0; j < tileM.mapTiles[i].length; j++) {
 
                 if (shiftX != 0 || shiftY != 0) {
-                    System.out.printf("moving camerax%d y%d\n", shiftX, shiftY);
+                    if (Config.DEBUG_MODE && Config.DEBUG_PRINT_CAMERA_MOVEMENT) {
+                        System.out.printf("moving camerax%d y%d\n", shiftX, shiftY);
+                    }
                 }
 
                 if (x > 0) {
@@ -167,11 +173,32 @@ public class GamePanel extends JPanel implements Runnable {
         // Update the world
         shiftTiles(shiftX, shiftY);
 
+        // Resetting spellOverlays
+        tileM.disableHighlightOnTiles();
+
         if (keyH.actionBarSlotOnePressed) {
-            // Ability ability = getAbilityAt(ActionBar.ONE)
-            // ability.showSpellOverlay // which will deal call the appropriate method per
-            // object
-            tileM.highlightAvailableTiles(player, player.actionBar[0].getTileRange());
+            boolean spellHasFired = false;
+            Ability ability = player.actionBar[0];
+
+            ability.toggleSpellOverlay(tileM, player);
+
+            if (mouseH.leftClickIsPressed && mouseH.isPressed) {
+                spellHasFired = ability.fire(player, tileM.getTileAtPosition(currentMouseX, currentMouseY), tileM);
+                mouseH.leftClickIsPressed = false;
+            }
+
+            if (spellHasFired) {
+                tileM.disableHighlightOnTiles();
+                keyH.actionBarSlotOnePressed = false;
+            }
+
+            // tileM.highlightAvailableTiles(player, player.actionBar[0]);
+        }
+
+        if (keyH.actionBarSlotTwoPressed) {
+            Ability ability = player.actionBar[1];
+
+            ability.toggleSpellOverlay(tileM, player);
         }
 
         // Update tile if its getting hovered

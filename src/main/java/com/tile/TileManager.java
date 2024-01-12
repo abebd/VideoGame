@@ -5,11 +5,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import com.ability.Ability;
 import com.entity.Entity;
 import com.game.GamePanel;
+
+import config.Config;
 
 public class TileManager {
 
@@ -21,6 +26,7 @@ public class TileManager {
     public Tile[][] visibleMapTiles;
     Tile currentTile;
     Tile lastOnHoverTile;
+    public List<Tile> currentHighlightedTiles = new ArrayList<>();
 
     public TileManager(GamePanel gp) {
 
@@ -158,13 +164,15 @@ public class TileManager {
         return currentTile;
     }
 
-    public void highlightAvailableTiles(Entity caster, int range) {
-        Tile startingTile = caster.getMyTile();
+    public void highlightAvailableTiles(Entity entity, Ability ability) {
+        Tile startingTile = entity.getMyTile();
 
-        int minColumn = startingTile.getColumnValue() - range;
-        int maxColumn = startingTile.getColumnValue() + range;
-        int minRow = startingTile.getRowValue() - range;
-        int maxRow = startingTile.getRowValue() + range;
+        int minColumn = startingTile.getColumnValue() - ability.getTileRange();
+        int maxColumn = startingTile.getColumnValue() + ability.getTileRange();
+        int minRow = startingTile.getRowValue() - ability.getTileRange();
+        int maxRow = startingTile.getRowValue() + ability.getTileRange();
+
+        List<Tile> tilesToHighlight = new ArrayList<>();
 
         for (int col = 0; col < mapTiles.length; col++) {
             for (int row = 0; row < mapTiles[col].length; row++) {
@@ -173,26 +181,71 @@ public class TileManager {
                 int actualColumn = mapTiles[col][row].getColumnValue();
                 int actualRow = mapTiles[col][row].getRowValue();
 
-                if (minColumn < actualColumn && actualColumn < maxColumn && minRow < actualRow && actualRow < maxRow
+                if (minColumn < actualColumn
+                        && actualColumn < maxColumn
+                        && minRow < actualRow
+                        && actualRow < maxRow
+                        // can maybe remove this statement since we might check it in
+                        // enableHighlightOnAppropriateTiles()?
                         && !actualTile.objectOnTileHasCollision()) {
 
                     actualTile.setIsHighlighted(true);
-                } else {
-                    // Turn it off
-                    actualTile.setIsHighlighted(false);
+                    currentHighlightedTiles.add(actualTile);
+                    // tilesToHighlight.add(actualTile);
                 }
+
             }
         }
+        // enableHighlightOnAppropriateTiles(tilesToHighlight, entity, ability);
+        // List<Tile> validTiles = validateCollisionOnTiles(tilesToHighlight, entity,
+        // ability);
+        // toggleHighlightOnTiles(tilesToHighlight);
+    }
 
+    public void toggleHighlightOnTiles(List<Tile> tiles) {
+        for (Tile tile : tiles) {
+            tile.toggleHighlighted();
+        }
+    }
+
+    public void disableHighlightOnTiles() {
+
+        for (Tile tile : currentHighlightedTiles) {
+
+            tile.setIsHighlighted(false);
+        }
     }
 
     public void setHoverOnTileAt(int x, int y) {
         Tile tile = getTileAtPosition(x, y);
         if (lastOnHoverTile != null) {
+
             lastOnHoverTile.setIsHover(false);
         }
         tile.setIsHover(true);
         lastOnHoverTile = tile;
+    }
+
+    public boolean isTileInRange(Tile sourceTile, Tile targetTile, int bounds) {
+        int minX = sourceTile.getColumnValue() - bounds;
+        int maxX = sourceTile.getColumnValue() + bounds;
+        int minY = sourceTile.getRowValue() - bounds;
+        int maxY = sourceTile.getRowValue() + bounds;
+
+        if (Config.DEBUG_MODE && Config.DEBUG_PRINT_ABILITY_STATUS || Config.DEBUG_PRINT_CAMERA_MOVEMENT
+                || Config.DEBUG_PRINT_PLAYER_MOVEMENT) {
+            System.out.printf("Checking if tile @[%s] is in range of tile @[%s], bounds=%s\n",
+                    targetTile.getColRowAsString(),
+                    sourceTile.getColRowAsString(), bounds);
+        }
+
+        if (minX < targetTile.getColumnValue()
+                && targetTile.getColumnValue() < maxX
+                && minY < targetTile.getRowValue()
+                && targetTile.getRowValue() < maxY) {
+            return true;
+        }
+        return false;
     }
 }
 

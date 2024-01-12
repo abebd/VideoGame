@@ -9,9 +9,11 @@ import com.game.GamePanel;
 import com.tile.Tile;
 import com.tile.TileManager;
 
+import config.Config;
+
 public class MouseHandler implements MouseListener {
     public int lastMouseX, lastMouseY, newMouseX, newMouseY;
-    public boolean isPressed, isEntered, isClicked, /* REMOVE ME */ highlight;
+    public boolean isPressed, isEntered, isClicked, leftClickIsPressed, rightClickIsPressed;
 
     GamePanel gp;
     TileManager tileM;
@@ -43,14 +45,15 @@ public class MouseHandler implements MouseListener {
         lastMouseY = e.getY();
 
         if (SwingUtilities.isLeftMouseButton(e)) {
-            Tile tile = tileM.getTileAtPosition(lastMouseX, lastMouseY);
-            tile.toggleIsHighlighted();
+            leftClickIsPressed = true;
+            // tile.toggleHighlighted();
         }
 
         if (SwingUtilities.isRightMouseButton(e)) {
+            rightClickIsPressed = true;
             Tile tile = tileM.getTileAtPosition(lastMouseX, lastMouseY);
             tile.showContextMenu(gp, lastMouseX, lastMouseY);
-            System.out.println(tile.toString());
+            // System.out.println(tile.toString());
         }
     }
 
@@ -63,9 +66,14 @@ public class MouseHandler implements MouseListener {
         // TODO: Fix outside and inside bounds camera
 
         if (SwingUtilities.isLeftMouseButton(e)) {
-            if (lastMouseX != newMouseX && lastMouseY != newMouseY)
-                System.out.printf("dragged from x:%d -> %d and y:%d -> %d\n", lastMouseX, newMouseX, lastMouseY,
-                        newMouseY);
+            if (lastMouseX != newMouseX && lastMouseY != newMouseY) {
+                if (Config.DEBUG_MODE && Config.DEBUG_PRINT_CAMERA_MOVEMENT) {
+                    System.out.printf("dragged from x:%d -> %d and y:%d -> %d\n", lastMouseX,
+                            newMouseX, lastMouseY,
+                            newMouseY);
+
+                }
+            }
 
             gp.shiftX = (lastMouseX - newMouseX);
             gp.shiftY = (lastMouseY - newMouseY);

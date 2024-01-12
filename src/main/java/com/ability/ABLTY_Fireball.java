@@ -1,6 +1,8 @@
 package com.ability;
 
 import com.entity.Entity;
+import com.entity.Player;
+import com.tile.Tile;
 import com.tile.TileManager;
 
 public class ABLTY_Fireball extends Ability {
@@ -15,12 +17,9 @@ public class ABLTY_Fireball extends Ability {
         this.cooldown = 3;
     }
 
-    public void spellOverlay(TileManager tileM, Entity caster) {
-        tileM.highlightAvailableTiles(caster, this.tileRange);
-    }
-
-    public void fire() {
-        
+    @Override
+    public boolean fire(Player player, Tile targetTile, TileManager tileM) {
+        return false;
     }
 
 }
